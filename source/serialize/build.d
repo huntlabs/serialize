@@ -85,9 +85,9 @@ string writeStructArray(T,string memberName, int i = 0)()
 
 string readStructArray(T,string memberName, int i = 0)()
 {
-	string  str = "{writeln(\"read array in : "~ memberName ~"\");\n ";
+	string  str = "{/*writeln(\"read array in : "~ memberName ~"\");*/\n ";
 	str ~= "uint leng" ~ i.stringof ~ " = stream.startReadArray();\n";
-	str ~= "writeln(\"======\");\n ";
+//	str ~= "writeln(\"======\");\n ";
 	str ~= memberName ~ " = new " ~ ForeachType!T.stringof ~ "[leng" ~  i.stringof ~ "];\n";
 	str ~= "foreach(v"~ i.stringof ~" ; 0..leng" ~ i.stringof ~ "){\n";
 	static if(isArray!(ForeachType!T))

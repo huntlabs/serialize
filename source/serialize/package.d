@@ -96,6 +96,7 @@ alias WriteStream = IWriteStream!(GCAllocator);
 
 version(unittest)
 {
+	import std.stdio;
 	struct TT
 	{
 		float ft;
@@ -280,7 +281,7 @@ unittest
 	assert(ta.iarry ==  tta.iarry);
 	assert(ta.str ==  tta.str);
 	assert(ta.ta.ft ==  tta.ta.ft);
-	assert(ta.ta.dt ==  tta.ta.dt.toISOExtString());
+	assert(ta.ta.dt ==  tta.ta.dt);
 	assert(ta.db ==  tta.db);
 	assert(ta.ui ==  tta.ui);
 	
