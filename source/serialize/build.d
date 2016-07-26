@@ -38,7 +38,7 @@ string _serializeFun(T)() if(isStruct!T)
 
 	foreach(memberName; __traits(derivedMembers,T))
 	{
-		static if(isBasicSupport!(typeof(__traits(getMember,T, memberName))).isBSupport)
+		static if(isBasicSupport!(typeof(__traits(getMember,T, memberName))).isBSupport && !isCallable!(__traits(getMember,T, memberName)))
 		{
 			static if(isStruct!(typeof(__traits(getMember,T, memberName))))
 			{

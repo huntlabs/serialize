@@ -129,6 +129,14 @@ version(unittest)
 		TT[] tt;
 		TT[][] ttt;
 		mixin Serialize!TAT;
+		
+		void intd()
+		{}
+		
+		int getD()
+		{
+                    return 0;
+		}
 	}
 
 
