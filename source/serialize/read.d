@@ -26,17 +26,15 @@ struct ReadStream
 	}
 
 	Types arrayType()
-	in{
-		assert(_data[_currt] == Types.Array);
-	}body{
+	{
+		myAssert(_data[_currt] == Types.Array, "check Array type erro");
 		return cast(Types)(_data[_currt + 1]);
 	}
 
 	// return len.
 	uint startReadArray()
-	in{
-		assert(_data[_currt] == Types.Array);
-	}body{
+	{
+		myAssert(_data[_currt] == Types.Array,"check Array type erro");
 		StatusNode * state = new StatusNode();
 		state.state = Status.InArray;
 		state.type = cast(Types)_data[_currt+1];
@@ -57,9 +55,8 @@ struct ReadStream
 	}
 
 	void startReadStruct()
-	in{
-		assert(_data[_currt] == Types.Struct);
-	}body{
+	{
+		myAssert(_data[_currt] == Types.Struct,"check struct type erro");
 		_currt ++;
 
 		StatusNode * state = new StatusNode();
@@ -158,10 +155,10 @@ struct ReadStream
 	}
 	
 	ubyte[] read(X:ubyte[])()
-	in{
-		assert(Types.Array == _data[_currt]);
-		assert(Types.UByte == _data[_currt + 1]);
-	}body{
+	{
+		myAssert(Types.Array == _data[_currt], "read check type erro : " ~ X.stringof);
+		myAssert(Types.UByte == _data[_currt + 1] , "read check type erro : " ~ X.stringof);
+
 		uint len = startReadArray();
 		size_t start = _currt;
 		_currt += len;
@@ -171,10 +168,10 @@ struct ReadStream
 	}
 	
 	string read(X: string)()
-	in{
-		assert(Types.Array == _data[_currt]);
-		assert(Types.Char == _data[_currt + 1]);
-	}body{
+	{
+		myAssert(Types.Array == _data[_currt],"read check type erro : " ~ X.stringof);
+		myAssert(Types.Char == _data[_currt + 1],"read check type erro : " ~ X.stringof);
+
 		uint len = startReadArray();
 		size_t start = _currt;
 		_currt += len;
@@ -202,17 +199,17 @@ private:
 		StatusNode * state2 = _status.front();
 		if(state2 is null)
 		{
-			assert(ty == _data[_currt]);
+			myAssert(ty == _data[_currt],"read check type erro  " );
 			++_currt;
 		} 
 		else if(state2.state != Status.InArray)
 		{
-			assert(ty == _data[_currt]);
+			myAssert(ty == _data[_currt],"read check type erro  " );
 			++_currt;
 		}
 		else
 		{
-			assert(ty == state2.type);
+			myAssert(ty == state2.type,"read check type erro  " );
 		}
 	}
 private:
@@ -220,4 +217,20 @@ private:
 	size_t _currt;
 
 	StatusStack _status;
+}
+
+class SerializeReadException :Exception
+{
+	@nogc @safe pure nothrow this(string msg, string file , size_t line)
+	{
+		super(msg, file, line, null);
+	}
+}
+
+private:
+pragma(inline,true)
+void myAssert(string file = __FILE__, int line = __LINE__)(bool erro, lazy string msg = string.init)
+{
+	if(!erro)
+		throw new SerializeReadException(msg,file,line);
 }
