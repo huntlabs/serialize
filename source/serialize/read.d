@@ -193,7 +193,7 @@ struct ReadStream
 	}
 
 private:
-	pragma(inline, true)
+	//pragma(inline, true)
 	void typePrev(Types ty)
 	{
 		StatusNode * state2 = _status.front();

@@ -229,7 +229,7 @@ struct IWriteStream(Allocator = Mallocator)
 	}
 
 private:
-	pragma(inline, true) 
+	//pragma(inline, true) 
 	void writeRawArray(Types ty, ubyte[] data)
 	{
 		append(Types.Array);
@@ -242,7 +242,7 @@ private:
 		append(Types.End);
 	}
 
-	pragma(inline, true) 
+	//pragma(inline, true) 
 	void doIsArray(Types ty)
 	{
 		StatusNode * state = _status.front();
