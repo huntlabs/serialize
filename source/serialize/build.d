@@ -11,7 +11,7 @@ mixin template Serialize(T) //if(isStruct!T)
 	enum __buildStr__ = _serializeFun!T();
 	mixin(__buildStr__);
 
-//	pragma(inline,true)
+	pragma(inline)
 	static ubyte[] serialize(Allocator = GCAllocator)(ref T value)
 	{
 		IWriteStream!(Allocator)  stream = IWriteStream!(Allocator)(32);
@@ -19,7 +19,7 @@ mixin template Serialize(T) //if(isStruct!T)
 		return stream.data();
 	}
 
-	pragma(inline,true)
+	pragma(inline)
 	static T unsSerialize(ReadStream * stream)
 	{
 		T value;
