@@ -191,7 +191,7 @@ struct IWriteStream(Allocator = Mallocator)
 		++_len;
 	}
 
-	pragma(inline) void append(ubyte[] value)
+	pragma(inline) void append(in ubyte[] value)
 	{
 		if (_data.length < (_len + value.length))
 			exten(value.length);
