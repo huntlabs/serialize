@@ -274,11 +274,9 @@ private:
 		else
 			size = 32;
 		size += len;
-		auto data = cast(ubyte[]) _alloc.allocate(size);
-		if(_len > 0)
-			data[0 .. _len] = _data[0 .. _len];
-		_alloc.deallocate(_data);
-		_data = data;
+		void[] td = cast(void[])_data;
+		_alloc.reallocate(td,len);
+		_data = cast(ubyte[])td;
 	}
 
 private:
