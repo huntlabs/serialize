@@ -36,7 +36,7 @@ string _serializeFun(T)() if(isStruct!T)
 	string  rstr = "static void unSerialize(" ~ T.stringof ~ " * value, ReadStream * stream){\n";
 	rstr ~= "stream.startReadStruct();\n scope(success) stream.endReadStruct();\n";
 
-	foreach(memberName; __traits(derivedMembers,T))
+	foreach(memberName; FieldNameTuple!T)
 	{
 		static if(isBasicSupport!(typeof(__traits(getMember,T, memberName))).isBSupport && !isCallable!(__traits(getMember,T, memberName)))
 		{

@@ -125,6 +125,7 @@ version(unittest)
 	
 	struct TAT
 	{
+		enum AA = 10;
 		TA ta;
 		TT[] tt;
 		TT[][] ttt;
@@ -169,7 +170,7 @@ version(unittest)
 		ReadStream steam = ReadStream(data);
 		
 		TAT.unSerialize(&ttat,&steam);
-		
+		writeln("AA ", TAT.AA);
 		writeln("ttat.ta.data = ", ttat.ta.data);
 		writeln("ttat.ta.iarry = ", ttat.ta.iarry);
 		writeln("ttat.ta.str = ", ttat.ta.str);
