@@ -6,6 +6,7 @@ import serialize.status;
 import std.bitmanip;
 import std.traits;
 import std.experimental.allocator;
+import std.experimental.logger;
 import std.experimental.allocator.mallocator;
 import core.memory;
 
@@ -193,6 +194,7 @@ struct IWriteStream(Allocator = Mallocator)
 
 	pragma(inline) void append(in ubyte[] value)
 	{
+		//trace("data.length = ", _data.length, "  will len = ",(_len + value.length));
 		if (_data.length < (_len + value.length))
 			exten(value.length);
 		auto len = _len + value.length;
@@ -268,14 +270,13 @@ private:
 	
 	void exten(size_t len)
 	{
-		auto size = _data.length;
+		auto size = _data.length + len;
 		if (size > 0)
 			size = size > 128 ? size + ((size / 3) * 2) : size * 2;
 		else
 			size = 32;
-		size += len;
 		void[] td = cast(void[])_data;
-		_alloc.reallocate(td,len);
+		_alloc.reallocate(td,size);
 		_data = cast(ubyte[])td;
 	}
 
