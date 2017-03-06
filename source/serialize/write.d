@@ -275,9 +275,10 @@ private:
 			size = size > 128 ? size + ((size / 3) * 2) : size * 2;
 		else
 			size = 32;
-		void[] td = cast(void[])_data;
-		_alloc.reallocate(td,size);
-		_data = cast(ubyte[])td;
+		auto data = _data;
+		_data = cast(ubyte[]) _alloc.allocate(size);
+		_data[0..data.length] = data[];
+		_alloc.deallocate(data);
 	}
 
 private:
