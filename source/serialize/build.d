@@ -6,7 +6,7 @@ import serialize.write;
 import serialize.read;
 import serialize.types;
 
-mixin template Serialize(T) //if(isStruct!T)
+mixin template Serialize(T) if(isStruct!T)
 {
 	enum __buildStr__ = _serializeFun!T();
 	mixin(__buildStr__);

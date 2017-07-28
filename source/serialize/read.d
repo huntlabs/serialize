@@ -228,7 +228,7 @@ class SerializeReadException :Exception
 }
 
 private:
-pragma(inline,true)
+pragma(inline)
 void myAssert(string file = __FILE__, int line = __LINE__)(bool erro, lazy string msg = string.init)
 {
 	if(!erro)

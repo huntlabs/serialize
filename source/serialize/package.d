@@ -6,9 +6,6 @@ public import serialize.read;
 public import serialize.types;
 public import serialize.build;
 
-alias WriteStream = IWriteStream!(GCAllocator);
-
-
 /**
  *  按照顺序写入和读出，不关心原来的变量名的，不记录写的顺序。
  *  存储基本大端字节序存储。

@@ -109,11 +109,6 @@ struct IWriteStream(Allocator = Mallocator)
 		writeRawArray(Types.Char,cast(ubyte[])value);
 	}
 
-	void write(X)(ref X value) if(is (X == struct))
-	{
-		mixin(getWriteFun!X());
-	}
-
 	void write(X)(ref X value) if(isArray!(X) && isBasicSupport!(X).isBSupport && !isStruct!X)
 	{
 		startArray!(ForeachType!X)();
